@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown to June 22, 2023</title>
+  <script>
+    function getTimeRemaining(endTime) {
+      var totalSeconds = Date.parse(endTime) - Date.now();
+      var seconds = Math.floor((totalSeconds / 1000) % 60);
+      var minutes = Math.floor((totalSeconds / 1000 / 60) % 60);
+      var hours = Math.floor((totalSeconds / (1000 * 60 * 60)) % 24);
+      var days = Math.floor(totalSeconds / (1000 * 60 * 60 * 24));
+      return {
+        total: totalSeconds,
+        days: days,
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds
+      };
+    }
+
+    function initializeClock(id, endTime) {
+      var clock = document.getElementById(id);
+      var daysSpan = clock.querySelector('.days');
+      var hoursSpan = clock.querySelector('.hours');
+      var minutesSpan = clock.querySelector('.minutes');
+      var secondsSpan = clock.querySelector('.seconds');
+
+      function updateClock() {
+        var time = getTimeRemaining(endTime);
+
+        daysSpan.innerHTML = time.days;
+        hoursSpan.innerHTML = ('0' + time.hours).slice(-2);
+        minutesSpan.innerHTML = ('0' + time.minutes).slice(-2);
+        secondsSpan.innerHTML = ('0' + time.seconds).slice(-2);
+
+        if (time.total <= 0) {
+          clearInterval(timeinterval);
+        }
+      }
+
+      updateClock();
+      var timeinterval = setInterval(updateClock, 1000);
+    }
+
+    window.onload = function() {
+      var deadline = 'June 22 2023 17:00:00 UTC';
+      initializeClock('countdown', deadline);
+    };
+  </script>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 54px;
+      font-family: Arial, sans-serif;
+    }
+
+    .countdown span {
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="countdown" id="countdown">
+    <span class="days"></span> days
+    <span class="hours"></span> hours
+    <span class="minutes"></span> minutes
+    <span class="seconds"></span> seconds
+  </div>
+</body>
+</html>
